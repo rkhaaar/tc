@@ -127,7 +127,7 @@ profile = data.get('profile', {})
 training_plan = data.get('training_plan', [])
 metrics_collected = data.get('metrics_collected', {})
 
-elif menu == "🏠 Home":
+if menu == "🏠 Home":
     st.title("Today's Overview")
 
     # --- Today's Session Card ---
