@@ -46,36 +46,38 @@ body, .stApp {
 }
 
 .data-card {
-    background-color: #1c2128; /* Card background */
+    background-color: #1a1e24; /* Slightly lighter card background */
     color: #f8f9fa;
-    border-radius: 0.5rem;
-    padding: 1rem;
+    border-radius: 0.75rem; /* More rounded corners */
+    padding: 1.25rem; /* Increased padding */
     margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); /* Subtle shadow */
 }
 
 .card-title {
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
+    font-size: 1.15em;
+    font-weight: 600; /* Semi-bold */
+    margin-bottom: 0.75rem;
     color: #e0e6ed;
 }
 
 .metric-value {
-    font-size: 1.8em;
+    font-size: 2em;
     font-weight: bold;
+    line-height: 1.1;
 }
 
 .metric-label {
     font-size: 0.9em;
     color: #adb5bd;
+    margin-top: 0.25rem;
 }
 
 .status-box {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 1rem 0;
+    padding-top: 1rem;
 }
 
 .status-item {
@@ -83,13 +85,14 @@ body, .stApp {
 }
 
 .status-value {
-    font-weight: bold;
-    font-size: 1em;
+    font-weight: 500; /* Slightly lighter bold */
+    font-size: 1.05em;
 }
 
 .status-label {
     color: #adb5bd;
-    font-size: 0.85em;
+    font-size: 0.8em;
+    margin-top: 0.2rem;
 }
 
 @media (max-width: 768px) {
@@ -171,7 +174,7 @@ if menu == "🏠 Home":
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # --- Quick Status Metrics (moved below the styled boxes) ---
+    # --- Quick Status Metrics ---
     st.markdown("### Quick Status")
     col1, col2, col3 = st.columns(3)
     col1.metric("Weight (kg)", profile.get('weight_kg', 'N/A'))
