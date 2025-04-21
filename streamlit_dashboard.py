@@ -131,50 +131,51 @@ if menu == "🏠 Home":
     st.title("Today's Overview")
 
     # --- Today's Session Card ---
-    st.markdown('<div class="data-card">', unsafe_allow_html=True)
-    st.markdown('<div class="card-title">Today\'s Session</div>', unsafe_allow_html=True)
-    today_session = "Rest Day"
-    if training_plan and training_plan[0].get('sessions'):
-        today_session = training_plan[0]['sessions'][0]
-    st.markdown(f'<div class="metric-value">{today_session}</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div class="data-card">
+        <div class="card-title">Today's Session</div>
+        <div class="metric-value">
+            {'Rest Day' if not (training_plan and training_plan[0].get('sessions')) else training_plan[0]['sessions'][0]}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # --- Athlete Score Card ---
-    st.markdown('<div class="data-card" style="text-align: center;">', unsafe_allow_html=True)
-    st.markdown('<div class="card-title">Athlete Score</div>', unsafe_allow_html=True)
-    athlete_score = profile.get('athlete_score', 78)
-    st.markdown(f'<div class="metric-value">{athlete_score}</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div class="data-card" style="text-align: center;">
+        <div class="card-title">Athlete Score</div>
+        <div class="metric-value">{profile.get('athlete_score', 78)}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # --- Status, Duration, Effort Card ---
-    st.markdown('<div class="data-card">', unsafe_allow_html=True)
-    st.markdown('<div class="card-title">Session Summary</div>', unsafe_allow_html=True)
-    st.markdown('<div class="status-box">', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div class="data-card">
+        <div class="card-title">Session Summary</div>
+        <div class="status-box">
+            <div class="status-item">
+                <div class="status-value">
+                    {'Rest' if not (training_plan and training_plan[0].get('sessions')) else ('Training' if any(s in training_plan[0]['sessions'][0] for s in ['Bike', 'Run', 'Swim']) else 'N/A')}
+                </div>
+                <div class="status-label">Status</div>
+            </div>
+            <div class="status-item">
+                <div class="status-value">
+                    {'0 m' if not (training_plan and training_plan[0].get('sessions')) else ('1h 30 m' if 'Bike' in training_plan[0]['sessions'][0] else ('45 min' if 'Run' in training_plan[0]['sessions'][0] else 'N/A'))}
+                </div>
+                <div class="status-label">Duration</div>
+            </div>
+            <div class="status-item">
+                <div class="status-value">
+                    {'Easy' if not (training_plan and training_plan[0].get('sessions')) else ('Moderate' if 'Bike' in training_plan[0]['sessions'][0] else ('Easy' if 'Run' in training_plan[0]['sessions'][0] else 'N/A'))}
+                </div>
+                <div class="status-label">Effort</div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    today_status = "Rest"
-    today_duration = "0 m"
-    today_effort = "Easy"
-
-    if training_plan and training_plan[0].get('sessions'):
-        first_session_details = training_plan[0]['sessions'][0]
-        if "Bike" in first_session_details:
-            today_status = "Training"
-            today_duration = "1h 30 m"
-            today_effort = "Moderate"
-        elif "Run" in first_session_details:
-            today_status = "Training"
-            today_duration = "45 min"
-            today_effort = "Easy"
-        # Add more conditions for other sports/sessions
-
-    st.markdown(f'<div class="status-item"><div class="status-value">{today_status}</div><div class="status-label">Status</div></div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="status-item"><div class="status-value">{today_duration}</div><div class="status-label">Duration</div></div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="status-item"><div class="status-value">{today_effort}</div><div class="status-label">Effort</div></div>', unsafe_allow_html=True)
-
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # --- Quick Status Metrics (Keep these as Streamlit metrics for now) ---
+    # --- Quick Status Metrics ---
     st.markdown("### Quick Status")
     col1, col2, col3 = st.columns(3)
     col1.metric("Weight (kg)", profile.get('weight_kg', 'N/A'))
@@ -182,8 +183,6 @@ if menu == "🏠 Home":
     col3.metric("Body Fat %", profile.get('body_fat_pct', 'N/A'))
     col1.metric("VO2 Max", profile.get('vo2max', 'N/A'))
     col2.metric("Athlete", profile.get('name', 'N/A'))
-
-
 elif menu == "📅 Training Plan":
     st.subheader("📅 Weekly Training Plan")
     for week in training_plan:
