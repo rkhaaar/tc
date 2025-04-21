@@ -19,20 +19,20 @@ st.set_page_config(page_title="Triathlon Coach Dashboard", layout="wide")
 st.markdown("""
 <style>
 body, .stApp {
-    background-color: #1e1e1e; /* Dark background for the whole app */
-    color: #f4f4f4; /* Light text color */
-    font-family: 'Poppins', sans-serif;
+    background-color: #0e1117; /* Very dark background */
+    color: #f8f9fa; /* Light text color */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
 }
 
 .sidebar .sidebar-content {
-    background-color: #2c2c2c; /* Darker sidebar background */
-    border-right: 1px solid #444;
+    background-color: #161b22; /* Darker sidebar */
+    border-right: 1px solid #21262d;
     padding-top: 2rem;
     font-size: 16px;
 }
 
 .sidebar .sidebar-content a {
-    color: #ccc;
+    color: #c9d1d9;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -41,79 +41,64 @@ body, .stApp {
 }
 
 .sidebar .sidebar-content a:hover {
-    background-color: #3a3a3a;
+    background-color: #21262d;
     border-radius: 6px;
 }
 
-[data-testid="metric-container"] > div {
-    background-color: #333;
+.data-card {
+    background-color: #1c2128; /* Card background */
+    color: #f8f9fa;
     border-radius: 0.5rem;
     padding: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    color: #fff;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.session-box {
-    background-color: #2c2c2c; /* Dark background for boxes */
-    color: #fff; /* White text */
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-.session-title {
-    font-size: 1.2em;
+.card-title {
+    font-size: 1.1em;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
+    color: #e0e6ed;
 }
 
-.score-box {
-    background-color: #2c2c2c; /* Dark background for boxes */
-    color: #fff; /* White text */
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-.score-number {
-    font-size: 2.5em;
+.metric-value {
+    font-size: 1.8em;
     font-weight: bold;
 }
-.score-label {
+
+.metric-label {
     font-size: 0.9em;
-    color: #ccc;
+    color: #adb5bd;
 }
 
 .status-box {
-    background-color: #2c2c2c; /* Dark background for boxes */
-    color: #fff; /* White text */
-    padding: 15px;
-    border-radius: 10px;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: 1rem 0;
 }
+
 .status-item {
     text-align: center;
 }
-.status-label {
-    font-size: 0.9em;
-    color: #ccc;
-    margin-bottom: 5px;
-}
+
 .status-value {
     font-weight: bold;
+    font-size: 1em;
+}
+
+.status-label {
+    color: #adb5bd;
+    font-size: 0.85em;
 }
 
 @media (max-width: 768px) {
-    .stApp {
-        font-size: 14px;
-    }
     .status-box {
-        flex-direction: column; /* Stack items on smaller screens */
+        flex-direction: column;
         align-items: stretch;
     }
     .status-item {
-        margin-bottom: 10px;
+        margin-bottom: 0.75rem;
     }
 }
 </style>
@@ -130,7 +115,7 @@ with open(DATA_PATH) as f:
     data = json.load(f)
 
 # ---- Sidebar Navigation (Icon Based) ----
-st.sidebar.markdown("### 📋 Menu")
+st.sidebar.markdown("### ☰ Menu")
 menu = st.sidebar.radio("", [
     "🏠 Home", "📅 Training Plan", "📊 Metrics", "📖 History", "💬 Coach Chat"
 ], label_visibility="collapsed")
@@ -142,26 +127,33 @@ metrics_collected = data.get('metrics_collected', {})
 if menu == "🏠 Home":
     st.title("Today's Overview")
 
-    # --- "Today's Session" Box ---
-    today_session = "Rest Day"  # Default if no training planned for today
+    # --- Today's Session Card ---
+    st.markdown('<div class="data-card">', unsafe_allow_html=True)
+    st.markdown('<div class="card-title">Today\'s Session</div>', unsafe_allow_html=True)
+    today_session = "Rest Day"
     if training_plan and training_plan[0].get('sessions'):
         today_session = training_plan[0]['sessions'][0]
+    st.markdown(f'<div class="metric-value">{today_session}</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown(f'<div class="session-box"><div class="session-title">Today\'s Session</div>{today_session}</div>', unsafe_allow_html=True)
+    # --- Athlete Score Card ---
+    st.markdown('<div class="data-card" style="text-align: center;">', unsafe_allow_html=True)
+    st.markdown('<div class="card-title">Athlete Score</div>', unsafe_allow_html=True)
+    athlete_score = profile.get('athlete_score', 78)
+    st.markdown(f'<div class="metric-value">{athlete_score}</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    # --- "Athlete Score" Box ---
-    athlete_score = profile.get('athlete_score', 78) # Example score, adjust based on your data
-    st.markdown(f'<div class="score-box"><div class="score-label">Athlete Score</div><div class="score-number">{athlete_score}</div></div>', unsafe_allow_html=True)
+    # --- Status, Duration, Effort Card ---
+    st.markdown('<div class="data-card">', unsafe_allow_html=True)
+    st.markdown('<div class="card-title">Session Summary</div>', unsafe_allow_html=True)
+    st.markdown('<div class="status-box">', unsafe_allow_html=True)
 
-    # --- "Status", "Duration", "Effort" Box ---
     today_status = "Rest"
     today_duration = "0 m"
     today_effort = "Easy"
 
     if training_plan and training_plan[0].get('sessions'):
         first_session_details = training_plan[0]['sessions'][0]
-        # You'll need to parse the session string to extract duration and effort
-        # This is a basic example, you might need more sophisticated parsing
         if "Bike" in first_session_details:
             today_status = "Training"
             today_duration = "1h 30 m"
@@ -172,23 +164,12 @@ if menu == "🏠 Home":
             today_effort = "Easy"
         # Add more conditions for other sports/sessions
 
-    status_html = f"""
-    <div class="status-box">
-        <div class="status-item">
-            <div class="status-label">Status</div>
-            <div class="status-value">{today_status}</div>
-        </div>
-        <div class="status-item">
-            <div class="status-label">Duration</div>
-            <div class="status-value">{today_duration}</div>
-        </div>
-        <div class="status-item">
-            <div class="status-label">Effort</div>
-            <div class="status-value">{today_effort}</div>
-        </div>
-    </div>
-    """
-    st.markdown(status_html, unsafe_allow_html=True)
+    st.markdown(f'<div class="status-item"><div class="status-value">{today_status}</div><div class="status-label">Status</div></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="status-item"><div class="status-value">{today_duration}</div><div class="status-label">Duration</div></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="status-item"><div class="status-value">{today_effort}</div><div class="status-label">Effort</div></div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # --- Quick Status Metrics (moved below the styled boxes) ---
     st.markdown("### Quick Status")
@@ -196,8 +177,8 @@ if menu == "🏠 Home":
     col1.metric("Weight (kg)", profile.get('weight_kg', 'N/A'))
     col2.metric("Resting HR", profile.get('resting_hr', 'N/A'))
     col3.metric("Body Fat %", profile.get('body_fat_pct', 'N/A'))
-    col1.metric("VO2 Max", profile.get('vo2max', 'N/A')) # Added VO2 Max here
-    col2.metric("Athlete", profile.get('name', 'N/A')) # Added Athlete name here
+    col1.metric("VO2 Max", profile.get('vo2max', 'N/A'))
+    col2.metric("Athlete", profile.get('name', 'N/A'))
 
 
 elif menu == "📅 Training Plan":
