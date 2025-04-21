@@ -127,7 +127,7 @@ profile = data.get('profile', {})
 training_plan = data.get('training_plan', [])
 metrics_collected = data.get('metrics_collected', {})
 
-if menu == "🏠 Home":
+elif menu == "🏠 Home":
     st.title("Today's Overview")
 
     # --- Today's Session Card ---
@@ -174,7 +174,7 @@ if menu == "🏠 Home":
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # --- Quick Status Metrics ---
+    # --- Quick Status Metrics (Keep these as Streamlit metrics for now) ---
     st.markdown("### Quick Status")
     col1, col2, col3 = st.columns(3)
     col1.metric("Weight (kg)", profile.get('weight_kg', 'N/A'))
