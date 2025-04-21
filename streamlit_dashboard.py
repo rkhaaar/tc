@@ -127,7 +127,7 @@ profile = data.get('profile', {})
 training_plan = data.get('training_plan', [])
 metrics_collected = data.get('metrics_collected', {})
 
-if menu == "🏠 Home":
+f menu == "🏠 Home":
     st.title("Today's Overview")
 
     # --- Today's Session Card ---
@@ -175,14 +175,51 @@ if menu == "🏠 Home":
     </div>
     """, unsafe_allow_html=True)
 
-    # --- Quick Status Metrics ---
+    # --- Quick Status Metrics as Cards ---
     st.markdown("### Quick Status")
     col1, col2, col3 = st.columns(3)
-    col1.metric("Weight (kg)", profile.get('weight_kg', 'N/A'))
-    col2.metric("Resting HR", profile.get('resting_hr', 'N/A'))
-    col3.metric("Body Fat %", profile.get('body_fat_pct', 'N/A'))
-    col1.metric("VO2 Max", profile.get('vo2max', 'N/A'))
-    col2.metric("Athlete", profile.get('name', 'N/A'))
+
+    with col1:
+        st.markdown(f"""
+        <div class="data-card" style="text-align: center;">
+            <div class="card-title">Weight</div>
+            <div class="metric-value">{profile.get('weight_kg', 'N/A')} kg</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown(f"""
+        <div class="data-card" style="text-align: center;">
+            <div class="card-title">Resting HR</div>
+            <div class="metric-value">{profile.get('resting_hr', 'N/A')} bpm</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown(f"""
+        <div class="data-card" style="text-align: center;">
+            <div class="card-title">Body Fat %</div>
+            <div class="metric-value">{profile.get('body_fat_pct', 'N/A')}%</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    col4, col5 = st.columns(2)
+
+    with col4:
+        st.markdown(f"""
+        <div class="data-card" style="text-align: center;">
+            <div class="card-title">VO2 Max</div>
+            <div class="metric-value">{profile.get('vo2max', 'N/A')}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col5:
+        st.markdown(f"""
+        <div class="data-card" style="text-align: center;">
+            <div class="card-title">Athlete</div>
+            <div class="metric-value">{profile.get('name', 'N/A')}</div>
+        </div>
+        """, unsafe_allow_html=True)
 elif menu == "📅 Training Plan":
     st.subheader("📅 Weekly Training Plan")
     for week in training_plan:
