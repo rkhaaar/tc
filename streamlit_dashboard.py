@@ -27,7 +27,7 @@ body, .stApp {
 .sidebar .sidebar-content {
     background-color: #161b22; /* Darker sidebar */
     border-right: 1px solid #21262d;
-    padding-top: 2rem;
+    padding-top: 1rem; /* Reduced top padding for better mobile view */
     font-size: 16px;
 }
 
@@ -36,7 +36,7 @@ body, .stApp {
     text-decoration: none;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 8px; /* Reduced padding for smaller screens */
     transition: background 0.3s;
 }
 
@@ -49,60 +49,81 @@ body, .stApp {
     background-color: #1a1e24; /* Slightly lighter card background */
     color: #f8f9fa;
     border-radius: 0.75rem; /* More rounded corners */
-    padding: 1.25rem; /* Increased padding */
-    margin-bottom: 1rem;
+    padding: 1rem; /* Adjusted padding for smaller screens */
+    margin-bottom: 0.75rem; /* Reduced margin */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); /* Subtle shadow */
 }
 
 .card-title {
-    font-size: 1.15em;
+    font-size: 1em; /* Slightly smaller title */
     font-weight: 600; /* Semi-bold */
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem; /* Reduced margin */
     color: #e0e6ed;
 }
 
 .metric-value {
-    font-size: 2em;
+    font-size: 1.75em; /* Slightly smaller metric value */
     font-weight: bold;
     line-height: 1.1;
 }
 
 .metric-label {
-    font-size: 0.9em;
+    font-size: 0.8em; /* Smaller label */
     color: #adb5bd;
-    margin-top: 0.25rem;
+    margin-top: 0.2rem;
 }
 
 .status-box {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding-top: 1rem;
+    padding-top: 0.75rem; /* Reduced padding */
+    flex-direction: row; /* Ensure items are in a row by default */
 }
 
 .status-item {
     text-align: center;
+    margin-bottom: 0.5rem; /* Reduced margin */
 }
 
 .status-value {
     font-weight: 500; /* Slightly lighter bold */
-    font-size: 1.05em;
+    font-size: 0.9em; /* Smaller value */
 }
 
 .status-label {
     color: #adb5bd;
-    font-size: 0.8em;
-    margin-top: 0.2rem;
+    font-size: 0.7em; /* Smaller label */
+    margin-top: 0.1rem;
 }
 
+/* Media query for smaller screens (tablets and phones) */
 @media (max-width: 768px) {
     .status-box {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: column; /* Stack status items on smaller screens */
+        align-items: stretch; /* Make them take full width */
     }
-    .status-item {
+    .col-container {
+        flex-direction: column; /* Stack columns on smaller screens */
+    }
+    .col {
+        width: 100%; /* Make columns full width */
         margin-bottom: 0.75rem;
     }
+}
+
+/* Layout adjustments for better responsiveness */
+.st-emotion-cache-1y4p8pa { /* This targets the main content area */
+    padding: 1rem !important; /* Reduce overall padding */
+}
+
+.st-emotion-cache-164nlkn { /* This targets columns */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.st-emotion-cache-z5fcl4 { /* This targets the sidebar header */
+    padding-left: 1rem !important;
 }
 </style>
 """, unsafe_allow_html=True)
