@@ -1,0 +1,40 @@
+{
+  "profile": {
+    "name": "Alex Rider",
+    "age": 29,
+    "vo2max": 52,
+    "weight_kg": 72,
+    "resting_hr": 48,
+    "body_fat_pct": 12
+  },
+  "training_plan": [
+    {
+      "week": 1,
+      "start_date": "2025-04-21",
+      "sessions": [
+        "Swim: 1.5km",
+        "Bike: 40km",
+        "Run: 10km"
+      ]
+    }
+  ],
+  "metrics_collected": {
+    "2025-04-18": [
+      {
+        "sport": "bike",
+        "metrics": {
+          "duration_min": 60,
+          "avg_hr": 135,
+          "power": 210
+        }
+      },
+      {
+        "sport": "run",
+        "metrics": {
+          "duration_min": 45,
+          "avg_hr": 150
+        }
+      }
+    ]
+  }
+}
